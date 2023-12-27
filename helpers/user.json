@@ -1,0 +1,13 @@
+[
+  {
+    "firstName": "firstName",
+    "lastName": "lastName",
+    "emailAddress": "emailAddress",
+    "password": "password",
+    "nationality": "nationality",
+    "isAdmin": "true or false",
+    "likedFoods": ["e1", "e2", "e3"],
+    "ownFoods": ["e3", "e4", "e5"],
+    "dateOfRegister": "dateOfRegister"
+  }
+]

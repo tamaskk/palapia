@@ -1,0 +1,26 @@
+[
+  {
+    "name": "name",
+    "sdescription": "sdescription",
+    "ldescription": "ldescription",
+    "nationaly": "nationaly",
+    "time": "time",
+    "type": "type",
+    "difficulty": "difficulty",
+    "poeples": "poeples",
+    "image": "image",
+    "steps": [
+      {
+        "step": "step",
+        "time": "time"
+      }
+    ],
+    "ingredients": [
+      {
+        "ingredient": "ingredient",
+        "amount": "amount",
+        "unit": "unit"
+      }
+    ]
+  }
+]
