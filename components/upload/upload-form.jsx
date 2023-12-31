@@ -246,7 +246,7 @@ const UploadForm = () => {
             </div>
             {
               ingredients?.map((ingredient, index) => (
-                <div className={`grid grid-cols-3 w-full text-center border-b border-black`}>
+                <div key={index} className={`grid grid-cols-3 w-full text-center border-b border-black`}>
                   <h1>{ingredient.ingredient}</h1>
                   <h1>{ingredient.amount}</h1>
                   <h1>{ingredient.unit}</h1>
@@ -357,7 +357,7 @@ const UploadForm = () => {
             </div>
             {
               ingredients?.map((ingredient, index) => (
-                <div className={`grid grid-cols-3 w-full text-center border-b border-black`}>
+                <div key={index} className={`grid grid-cols-3 w-full text-center border-b border-black`}>
                   <h1>{ingredient.ingredient}</h1>
                   <h1>{ingredient.amount}</h1>
                   <h1>{ingredient.unit}</h1>
@@ -377,7 +377,7 @@ const UploadForm = () => {
             <div className='grid grid-cols-1 gap-2 w-full text-center'>
               {
                 steps?.map((step, index) => (
-                  <h1>{index + 1}. {step}</h1>
+                  <h1 key={index}>{index + 1}. {step}</h1>
                 ))
               }
             </div>
