@@ -1,25 +1,21 @@
 [
   {
-    "name": "name",
-    "sdescription": "sdescription",
-    "ldescription": "ldescription",
-    "nationaly": "nationaly",
-    "time": "time",
-    "type": "type",
-    "difficulty": "difficulty",
-    "poeples": "poeples",
-    "image": "image",
+    "name": "name", 				(input: text)
+    "description": "sdescription", (input: text)
+    "nationaly": "nationaly", 		(dropdown)
+    "time": "time", 				(dropdown)
+    "type": "type",					(dropdown)
+    "difficulty": "difficulty", 	(dropdown)
+    "peoples": "peoples", 			(input: text)
+    "image": "image", 				(input: text)
     "steps": [
-      {
-        "step": "step",
-        "time": "time"
-      }
+      "step"						(input: text)
     ],
     "ingredients": [
       {
-        "ingredient": "ingredient",
-        "amount": "amount",
-        "unit": "unit"
+        "ingredient": "ingredient", (input: text)
+        "amount": "amount", 		(input: text)
+        "unit": "unit" 				(dropdown)
       }
     ]
   }
