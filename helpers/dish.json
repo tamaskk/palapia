@@ -1,13 +1,13 @@
 [
   {
-    "name": "name", 				(input: text)
-    "description": "sdescription", (input: text)
-    "nationaly": "nationaly", 		(dropdown)
-    "time": "time", 				(dropdown)
-    "type": "type",					(dropdown)
-    "difficulty": "difficulty", 	(dropdown)
-    "peoples": "peoples", 			(input: text)
-    "image": "image", 				(input: text)
+    "name": "name", 				(input: text)                 a
+    "description": "sdescription", (input: text)           a
+    "nationaly": "nationaly", 		(dropdown)                b
+    "time": "time", 				(dropdown)                      a
+    "type": "type",					(dropdown)                        b
+    "difficulty": "difficulty", 	(dropdown)                  b
+    "peoples": "peoples", 			(input: text)               a
+    "image": "image", 				(input: text)                 b
     "steps": [
       "step"						(input: text)
     ],
