@@ -15,7 +15,8 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@/types/*": ["src/types/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/auth/signup.js", "pages/register/index.jsx", "components/register/register-form.jsx", "lib/db.js", "pages/api/auth.js", "components/ui/input.jsx", "pages/login/index.jsx", "components/login/login-form.jsx", "components/starting-page/starting-page.jsx", "components/layout/navigation.jsx", "components/popup/popup.jsx", "lib/countries.js", "pages/index.jsx"],

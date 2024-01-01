@@ -1,20 +1,16 @@
-import { FormEvent, useRef } from "react";
+import { useRef } from "react";
 import classes from "./profile-form.module.css";
-import { ChangePasswordDataType } from "@/types/credentials.type";
 
-interface PageProps {
-  onChangePassword: (arg: ChangePasswordDataType) => void;
-}
 
-function ProfileForm(props: PageProps) {
-  const oldPasswordRef = useRef<HTMLInputElement>(null);
-  const newPasswordRef = useRef<HTMLInputElement>(null);
+function ProfileForm(props) {
+  const oldPasswordRef = useRef();
+  const newPasswordRef = useRef();
 
-  function submitHandler(event: FormEvent) {
+  function submitHandler(event) {
     event.preventDefault();
 
-    const enteredOldPassword = oldPasswordRef.current!.value;
-    const enteredNewPassword = newPasswordRef.current!.value;
+    const enteredOldPassword = oldPasswordRef.current?.value;
+    const enteredNewPassword = newPasswordRef.current?.value;
 
     // optional: Add validation
 

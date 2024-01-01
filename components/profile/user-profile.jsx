@@ -1,4 +1,3 @@
-import { ChangePasswordDataType } from "@/types/credentials.type";
 import ProfileForm from "./profile-form";
 import classes from "./user-profile.module.css";
 
@@ -20,7 +19,7 @@ function UserProfile() {
   //   return <p className={classes.profile}>Loading...</p>;
   // }
 
-  async function changePasswordHandler(passwordData: ChangePasswordDataType) {
+  async function changePasswordHandler(passwordData) {
     const response = await fetch("/api/user/change-password", {
       method: "PATCH",
       body: JSON.stringify(passwordData),
