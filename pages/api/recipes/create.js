@@ -12,7 +12,7 @@ const handler = async (req, res) => {
 
   const data = req.body;
 
-  const { name, description, peoples, time, ingredients, image, nationality, difficulity, type, steps, userEmail, isApproved } = data;
+  const { name, description, peoples, time, ingredients, image, nationality, difficulity, type, steps, userEmail, flag, isApproved } = data;
 
   try {
     const client = await connectToDatabase();
@@ -30,6 +30,7 @@ const handler = async (req, res) => {
       type, 
       steps, 
       userEmail, 
+      flag,
       isApproved
     });
 

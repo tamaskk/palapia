@@ -34,10 +34,10 @@ const UploadForm = () => {
 
   const userEmail = session?.user.email;
 
-  const createRecipe = async ({ name, description, peoples, time, ingredients, image, nationality, difficulity, type, steps, userEmail, isApproved}) => {
+  const createRecipe = async ({ name, description, peoples, time, ingredients, image, nationality, difficulity, type, steps, userEmail, flag, isApproved}) => {
     const response = await fetch('/api/recipes/create', {
       method: 'POST',
-      body: JSON.stringify({ name, description, peoples, time, ingredients, image, nationality, difficulity, type, steps, userEmail, isApproved}),
+      body: JSON.stringify({ name, description, peoples, time, ingredients, image, nationality, difficulity, type, steps, userEmail, flag, isApproved}),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -224,6 +224,13 @@ const UploadForm = () => {
       return;
     }
 
+    console.log(countries)
+    const flagObject = countries.filter(item => item.name?.common === nationality);
+    console.log(flagObject);
+    
+    const flag = flagObject[0]?.flags.svg;
+    
+
     try {
       setRequestError("Recipe under construction!");
       setRequestStatus("warning");
@@ -239,6 +246,7 @@ const UploadForm = () => {
         image: picture,
         steps: steps,
         userEmail: userEmail,
+        flag: flag,
         isApproved: false
       });
     } catch (error) {
@@ -270,7 +278,7 @@ const UploadForm = () => {
             <div className='flex flex-col items-center lg:items-start w-full gap-3'>
               <label htmlFor="time" className='text-4xl font-semibold w-full md:w-auto text-center lg:text-left'>Time</label>
               <select name="time" onChange={e => setTime(e.target.value)} id="time" className='p-3 text-xl w-full active:outline-none focus:outline-none shadow-xl rounded-md border-b border-b-gray-600'>
-                <option disabled selected value="">Select time</option>
+                <option disabled value="">Select time</option>
                 <option value=">1h">Less than 1 hour</option>
                 <option value="1h-2h">Between 1 and 2 hours</option>
                 <option value="2h<">More than 2 hours</option>
@@ -322,7 +330,7 @@ const UploadForm = () => {
               className="p-3 text-xl active:outline-none focus:outline-none shadow-xl w-full rounded-md border-b border-b-gray-600"
               onChange={e => setNationality(e.target.value)}
             >
-              <option value="" disabled selected>
+              <option value="" disabled>
                 Choose your nationality
               </option>
               {countries?.map((country, index) => (
@@ -348,7 +356,7 @@ const UploadForm = () => {
                 className="p-3 text-xl active:outline-none focus:outline-none shadow-xl w-full rounded-md border-b border-b-gray-600"
                 onChange={e => setDifficulity(e.target.value)}
               >
-                <option value="" disabled selected>
+                <option value="" disabled>
                   Choose the difficulity
                 </option>
                 <option value="SEasy">
@@ -374,7 +382,7 @@ const UploadForm = () => {
                 className="p-3 text-xl active:outline-none focus:outline-none shadow-xl w-full rounded-md border-b border-b-gray-600"
                 onChange={e => setType(e.target.value)}
               >
-                <option value="" disabled selected>
+                <option value="" disabled>
                   Choose the type
                 </option>
                 <option value="Breakfast">

@@ -3,18 +3,29 @@ import Sort from "../components/mainpage/sort";
 import MainPageCard from "@/components/ui/mainpage-card";
 import { useState, useEffect } from "react";
 import { getAllRecipe } from "@/lib/db";
+import { getACountry } from "@/lib/countries";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useMainContext } from "@/lib/maincontext";
 
 export default function Home({ recipes }) {
+  const { data: session, status } = useSession();
+
   const [filteredDatas, setFilteredDatas] = useState([])
   const [recipeList, setRecipeList] = useState(recipes);
+
+  const router = useRouter();
+
+  const { setRequestStatus, setRequestError, likedFoods } = useMainContext();
 
   const filterDatasHandler = (filterDatas) => {
     setFilteredDatas(filterDatas.filter(data => data !== undefined));
   }
 
-  const flex = {
-    flex: "1 1 100px"
-  }
+  useEffect(() => {
+    console.log(likedFoods);
+  }, [likedFoods]);
+
 
   return (
     <div className="w-full h-full lg:max-w-[90%] xl:max-w-[95%] flex flex-col items-start justify-between px-5">
@@ -47,12 +58,14 @@ export default function Home({ recipes }) {
           {recipeList.map((recipe, index) => (
             <MainPageCard
               key={index}
+              id={recipe._id}
               name={recipe.name}
               description={recipe.description}
               people={recipe.peoples}
               time={recipe.time}
-              difficulity={recipe.difficulty}
+              difficulity={recipe.difficulity}
               picture={recipe.image}
+              flag={recipe.flag}
             />
           ))}
         </div>

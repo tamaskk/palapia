@@ -31,7 +31,9 @@ const Navigation = () => {
               </Link>
             </li>
             <li className={`font-bold text-xl cursor-pointer`}>
+              <Link href="/likedfoods">
               <Image src="/icons/star.svg" alt="star" width={24} height={24} />
+              </Link>
             </li>
             <li
               className={`flex flex-col items-center justify-center gap-1 font-bold text-xl cursor-pointer group`}

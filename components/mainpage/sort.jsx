@@ -15,7 +15,6 @@ const Sort = ({ filterDatasHandler }) => {
             filterDatasHandler([filteredCountry, filteredTime, filteredType, filteredDifficulity]);
         }
         filterData();
-        console.log(filteredCountry, filteredTime, filteredType, filteredDifficulity)
     }, [filteredCountry, filteredTime, filteredType, filteredDifficulity]);
 
     useEffect(() => {
