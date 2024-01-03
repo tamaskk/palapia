@@ -2,11 +2,9 @@ import Sort from "../components/mainpage/sort";
 import MainPageCard from "@/components/ui/mainpage-card";
 import { useState, useEffect } from "react";
 import { getAllRecipe } from "@/lib/db";
-import { useSession } from "next-auth/react";
 import { useMainContext } from "@/lib/maincontext";
 
 export default function Home({ recipes }) {
-  const { data: session, status } = useSession();
 
   const [filteredDatas, setFilteredDatas] = useState([]);
   const [recipeList, setRecipeList] = useState(recipes);

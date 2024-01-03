@@ -1,25 +1,27 @@
 import { getSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useMainContext } from "@/lib/maincontext";
 import UserProfile from "../components/profile/user-profile";
 
 function ProfilePage() {
-  return <h1>Profil page</h1>;
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+  const { setRequestStatus, setRequestError } = useMainContext();
+
+  useEffect(() => {
+    getSession().then((session) => {
+      if (session) {
+        setIsLoading(false);
+      } else {
+        router.replace("/auth");
+        setRequestError('You must be signed in to see your liked recipes.');
+        setRequestStatus('error');
+      }
+    });
+  }, [router]);
+
+  return <UserProfile />;
 }
-
-export const getServerSideProps = async (context) => {
-  const session = await getSession({ req: context.req });
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/auth",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: { session },
-  };
-};
 
 export default ProfilePage;

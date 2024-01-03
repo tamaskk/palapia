@@ -92,15 +92,14 @@ const MainPageCard = ({ id, name, flag, description, people, time, difficulity, 
 
     return (
         <article className="border-2 border-white cursor-pointer shadow-xl bg-white hover:border-gray-300 transition-all duration-300 rounded-lg">
-            <Link href={`/recipes/${linkToRecipe}`}>
             <div className="w-[350px] h-[350px] max-w-[350px] flex items-center justify-center overflow-hidden relative">
-                <div style={backgroundSettings} className="overflow-hidden w-[95%] h-[95%] hover:scale-110 transition-all duration-300 rounded-lg"></div>
+                <Link href={`/recipes/${linkToRecipe}`} style={backgroundSettings} className="overflow-hidden w-[95%] h-[95%] hover:scale-110 transition-all duration-300 rounded-lg"></Link>
                 <div className="absolute top-5 left-5" onClick={() => likeHandler(id)}>
                 <Image src={`/icons/${likedFoods.includes(id) ? "star": "unliked"}.svg`} width={35} height={35} alt="Like button"/>
                 </div>
                 <Image src={flag} width={35} height={35} alt="Nationality of the recipe" className="absolute top-5 right-5" />
             </div>
-            <div className="flex flex-col items-center justify-center gap-4">
+            <Link href={`/recipes/${linkToRecipe}`} className="flex flex-col items-center justify-center gap-4">
                 <div className="text-center flex flex-col items-center justify-center gap-4 py-4">
                     <h1 className="text-xl font-black max-w-[250px]">{name}</h1>
                     <p className="max-w-[250px] text-md text-gray-600 break-words">{description}</p>
@@ -119,7 +118,6 @@ const MainPageCard = ({ id, name, flag, description, people, time, difficulity, 
                         <p className="text-sm text-gray-600">{difficulity}</p>
                     </div>
                     </div>
-            </div>
             </Link>
         </article>
     );

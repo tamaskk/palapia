@@ -81,7 +81,7 @@ const Navigation = () => {
               <div
                 className={`flex flex-col items-center justify-center font-bold text-xl gap-1 cursor-pointer group`}
               >
-                <Link href="/profile">
+                <Link onClick={navToggle} href="/profile">
                   <div className="flex flex-row items-center justify-center gap-2">
                     Profile
                     <Image src="/icons/user.svg" alt="user" width={12} height={12} />
