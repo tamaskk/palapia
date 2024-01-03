@@ -19,7 +19,7 @@ const Navigation = () => {
 
   return (
     <>
-      <nav className="hidden lg:block sticky max-w-screen overflow-x-hidden right-0 bg-[#ffffff] h-auto w-screen rounded-b-xl px-10 ">
+      <nav className="hidden lg:block sticky max-w-screen right-0 bg-[#ffffff] h-auto w-screen rounded-b-xl px-10 ">
         <div className="lg:max-w-full xl:max-w-[1200px] mx-auto flex flex-row items-center justify-between py-4">
           <Link href="/" className="text-orange-800 text-5xl font-black font-primary">Palapia</Link>
           <ul className="flex flex-row items-center justify-center gap-10">
@@ -32,13 +32,27 @@ const Navigation = () => {
             </li>
             <li className={`font-bold text-xl cursor-pointer`}>
               <Link href="/likedfoods">
-              <Image src="/icons/star.svg" alt="star" width={24} height={24} />
+                <Image src="/icons/star.svg" alt="star" width={24} height={24} />
               </Link>
             </li>
+            {status === "authenticated" && (
+              <li
+                className={`flex flex-col items-center justify-center font-bold text-xl gap-1 cursor-pointer group`}
+              >
+                <Link href="/profile">
+                  <div className="flex flex-row items-center justify-center gap-2">
+                    Profile
+                    <Image src="/icons/user.svg" alt="user" width={12} height={12} />
+                  </div>
+                </Link>
+                <div className="w-0 h-[1px] bg-black group-hover:w-full transition-all duration-300"></div>
+
+              </li>
+            )}
             <li
               className={`flex flex-col items-center justify-center gap-1 font-bold text-xl cursor-pointer group`}
             >
-              <div className="flex flex-row items-center justify-center gap-1">
+              <div className="flex flex-row items-center justify-center gap-1 relative group">
                 {
                   status === "authenticated" ?
                     <h1 onClick={logoutHandler}>Logout</h1>
@@ -46,12 +60,6 @@ const Navigation = () => {
                     <Link href="/auth">Sign In / Log In</Link>
                 }
 
-                <Image
-                  src="/icons/caret-down.svg"
-                  alt="caret-down"
-                  width={12}
-                  height={12}
-                />
               </div>
               <div className="w-0 h-[1px] bg-black group-hover:w-full transition-all duration-300"></div>
             </li>
@@ -69,10 +77,24 @@ const Navigation = () => {
           <Image src="/icons/upload.svg" alt="star" width={24} height={24} className="hover:scale:105 transition-all duration-300" />
         </Link>
         <Image onClick={navToggle} src="/icons/star.svg" alt="star" width={24} height={24} />
+        {status === "authenticated" && (
+              <div
+                className={`flex flex-col items-center justify-center font-bold text-xl gap-1 cursor-pointer group`}
+              >
+                <Link href="/profile">
+                  <div className="flex flex-row items-center justify-center gap-2">
+                    Profile
+                    <Image src="/icons/user.svg" alt="user" width={12} height={12} />
+                  </div>
+                </Link>
+                <div className="w-0 h-[1px] bg-black group-hover:w-full transition-all duration-300"></div>
+
+              </div>
+            )}
         <div className="flex flex-row items-center justify-center gap-1 font-bold text-xl">
           {
             status === "authenticated" ?
-            <h1 onClick={logoutHandler}>Logout</h1>
+              <h1 onClick={logoutHandler}>Logout</h1>
               :
               <Link onClick={navToggle} href="/auth">Sign In / Log In</Link>
           }

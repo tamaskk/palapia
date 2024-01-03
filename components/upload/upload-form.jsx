@@ -89,8 +89,6 @@ const UploadForm = () => {
     e.preventDefault();
 
     const ingredient = ingredientRefMobile.current?.value;
-    const amount = amountRefMobile.current?.value;
-    const unit = unitRefMobile.current?.value;
 
     if (!ingredient || ingredient.trim().length === 0) {
       setRequestError("Please enter a valid ingredient!");
@@ -98,27 +96,13 @@ const UploadForm = () => {
       return;
     }
 
-    if (!amount || amount.trim().length === 0) {
-      setRequestError("Please enter a valid amount!");
-      setRequestStatus("error");
-      return;
-    }
-
-    if (!unit || unit.trim().length === 0) {
-      setRequestError("Please enter a valid unit!");
-      setRequestStatus("error");
-      return;
-    }
-
-    setIngredients([...ingredients, { ingredient: ingredient, amount: amount, unit: unit }]);
+    setIngredients([...ingredients, ingredient]);
 
     ingredientRefMobile.current.value = "";
-    amountRefMobile.current.value = "";
-    unitRefMobile.current.value = "";
   }
 
   const deleteItemFromIngredient = (ingredient) => {
-    const newIngredients = ingredients.filter(item => item.ingredient !== ingredient);
+    const newIngredients = ingredients.filter(item => item !== ingredient);
     setIngredients(newIngredients);
   }
 
@@ -131,8 +115,6 @@ const UploadForm = () => {
     e.preventDefault();
 
     const ingredient = ingredientRef.current?.value;
-    const amount = amountRef.current?.value;
-    const unit = unitRef.current?.value;
 
     if (!ingredient || ingredient.trim().length === 0) {
       setRequestError("Please enter a valid ingredient!");
@@ -140,23 +122,9 @@ const UploadForm = () => {
       return;
     }
 
-    if (!amount || amount.trim().length === 0) {
-      setRequestError("Please enter a valid amount!");
-      setRequestStatus("error");
-      return;
-    }
-
-    if (!unit || unit.trim().length === 0) {
-      setRequestError("Please enter a valid unit!");
-      setRequestStatus("error");
-      return;
-    }
-
-    setIngredients([...ingredients, { ingredient: ingredient, amount: amount, unit: unit }]);
+    setIngredients([...ingredients, ingredient]);
 
     ingredientRef.current.value = "";
-    amountRef.current.value = "";
-    unitRef.current.value = "";
   }
 
 
@@ -269,7 +237,7 @@ const UploadForm = () => {
             <Input label="Recipe name" placeholder="Enter recipe name" type="text" ownStyle="w-full" onChangeHandler={e => setRecipeName(e.target.value)}/>
           </div>
           <div className='flex flex-col items-center lg:items-start w-full gap-3'>
-            <Input label="Description" placeholder="Enter the description" type="text" ownStyle="w-full" onChangeHandler={e => setDescription(e.target.value)} />
+            <Input label="Description" max={65} placeholder="Enter the description" type="text" ownStyle="w-full" onChangeHandler={e => setDescription(e.target.value)} />
           </div>
           <div className='grid grid-cols-1 lg:grid-cols-2 w-full gap-5'>
             <div className='flex flex-col items-center lg:items-start w-full gap-3'>
@@ -285,41 +253,39 @@ const UploadForm = () => {
               </select>
             </div>
           </div>
-          <div className='w-full flex-col items-center justify-center gap-8 hidden lg:flex mb-10'>
+          <div className='w-full flex flex-col items-center justify-center gap-8'>
             <h1 className='text-4xl font-semibold w-full md:w-auto text-center lg:text-left'>Ingredients</h1>
-            <div className='grid grid-cols-3 w-full gap-10 max-w-full'>
+            <div className='grid grid-cols-1 items-center w-full gap-10 max-w-full'>
               <div className='flex flex-col items-center justify-center'>
                 <label>Ingredient</label>
-                <input ref={ingredientRef} className='mt-1 p-2 w-full rounded-md border border-gray-300' type="text" placeholder="Enter the ingredient" />
-              </div>
-              <div className='flex flex-col items-center justify-center'>
-                <label>Amount</label>
-                <input ref={amountRef} className='mt-1 p-2 w-full rounded-md border border-gray-300' type="text" placeholder="Enter the ingredient" />
-              </div>
-              <div className='flex flex-col items-center justify-center'>
-                <label>Unit</label>
-                <input ref={unitRef} className='mt-1 p-2 w-full rounded-md border border-gray-300' type="text" placeholder="Enter the ingredient" />
+                <input ref={ingredientRef} className='mt-1 p-2 w-full rounded-md border border-gray-300' type="text" placeholder="Enter a step" />
               </div>
             </div>
-            <button onClick={addIngredientHandler} className='px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-300'>Add ingredient</button>
-            <div className='grid grid-cols-4 w-full text-center gap-4'>
-              <h1>Ingredient</h1>
-              <h1>Amount</h1>
-              <h1>Unit</h1>
-              <h1 className='text-red-500 text-xl font-bold cursor-pointer' onClick={() => setIngredients([])}>X</h1>
+            <button onClick={addIngredientHandler} className='px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-300'>Add step</button>
+            <div className='flex flex-row items-center justify-between min-w-fit px-2 max-w-full gap-2 w-full'>
+              <h1 className={`w-11/12 flex flex-col items-start max-w-fit justify-cente text-left px-4 lg:px-14`}>Ingredients</h1>
+              <h1 onClick={() => setIngredients([])} className='w-1/12 text-red-500 text-lg font-bold cursor-pointer text-center'>X</h1>
             </div>
-            {
-              ingredients?.map((ingredient, index) => (
-                <div key={index} className={`grid grid-cols-4 w-full gap-4 text-center ${index % 2 !== 0 ? "bg-gray-200 shadow-lg rounded-lg py-4" : ""}`}>
-                  <h1 className='max-w-fit' style={{ wordBreak: 'break-word' }}>{ingredient.ingredient}</h1>
-                  <h1 className='max-w-fit' style={{ wordBreak: 'break-word' }}>{ingredient.amount}</h1>
-                  <h1 className='max-w-fit' style={{ wordBreak: 'break-word' }}>{ingredient.unit}</h1>
-                  <h1 className='text-red-500 text-xl font-bold cursor-pointer' onClick={() => deleteItemFromIngredient(ingredient.ingredient)}>X</h1>
-                </div>
-              ))
-            }
+            <div className='flex flex-col items-center justify-center gap-2 w-full text-center mb-10'>
+              {
+                ingredients?.map((ingredient, index) => (
+                  <div key={index} className={`flex flex-row items-center justify-between min-w-fit px-2 max-w-full gap-2 w-full ${index % 2 !== 0 ? "bg-gray-200 shadow-lg rounded-lg py-4" : ""}`}>
+                    <div
+                      key={index}
+                      className={`w-11/12 flex flex-col items-start max-w-fit justify-cente text-left px-4 lg:px-14`}
+                      style={{ wordBreak: 'break-word' }}
+                    >
+                      - {ingredient}
+                    </div>
+                    <div className='w-1/12 text-red-500 text-lg font-bold cursor-pointer' onClick={() => deleteItemFromIngredient(ingredient)}>
+                      X
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+            </div>
           </div>
-        </div>
         <div className='flex flex-col items-center justify-center gap-10 w-full lg:w-1/2 max-w-full lg:max-w-[50%]'>
           <div className='flex flex-col items-center lg:items-start w-full gap-3'>
             <label className="text-4xl font-semibold w-full md:w-auto text-center md:text-left">
@@ -400,39 +366,37 @@ const UploadForm = () => {
               </select>
             </div>
           </div>
-          <div className='w-full flex-col items-center justify-center gap-8 flex lg:hidden'>
+          <div className='w-full flex lg:hidden flex-col items-center justify-center gap-8'>
             <h1 className='text-4xl font-semibold w-full md:w-auto text-center lg:text-left'>Ingredients</h1>
-            <div className='grid grid-cols-3 w-full gap-3 lg:gap-10 max-w-full'>
+            <div className='grid grid-cols-1 items-center w-full gap-10 max-w-full'>
               <div className='flex flex-col items-center justify-center'>
                 <label>Ingredient</label>
-                <input ref={ingredientRefMobile} className='mt-1 p-2 w-full rounded-md border border-gray-300 placeholder:text-xs ' type="text" placeholder="Enter the ingredient" />
-              </div>
-              <div className='flex flex-col items-center justify-center'>
-                <label>Amount</label>
-                <input ref={amountRefMobile} className='mt-1 p-2 w-full rounded-md border border-gray-300 placeholder:text-xs' type="text" placeholder="Enter the ingredient" />
-              </div>
-              <div className='flex flex-col items-center justify-center'>
-                <label>Unit</label>
-                <input ref={unitRefMobile} className='mt-1 p-2 w-full rounded-md border border-gray-300 placeholder:text-xs' type="text" placeholder="Enter the ingredient" />
+                <input ref={ingredientRefMobile} className='mt-1 p-2 w-full rounded-md border border-gray-300' type="text" placeholder="Enter a step" />
               </div>
             </div>
-            <button onClick={addIngredientHandlerMobile} className='px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-300'>Add ingredient</button>
-            <div className='grid grid-cols-4 w-full text-center'>
-              <h1>Ingredient</h1>
-              <h1>Amount</h1>
-              <h1>Unit</h1>
-              <h1 className='text-red-500 text-lg font-bold' onClick={() => setIngredients([])}>X</h1>
+            <button onClick={addStep} className='px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-300'>Add step</button>
+            <div className='flex flex-row items-center justify-between min-w-fit px-2 max-w-full gap-2 w-full'>
+              <h1 className={`w-11/12 flex flex-col items-start max-w-fit justify-cente text-left px-4 lg:px-14`}>Ingredient</h1>
+              <h1 onClick={() => setIngredients([])} className='w-1/12 text-red-500 text-lg font-bold cursor-pointer text-center'>X</h1>
             </div>
-            {
-              ingredients?.map((ingredient, index) => (
-                <div key={index} className={`grid grid-cols-4 w-full gap-4 text-center ${index % 2 !== 0 ? "bg-gray-200 shadow-lg rounded-lg py-4" : ""}`}>
-                  <h1 className='max-w-fit' style={{ wordBreak: 'break-word' }}>{ingredient.ingredient}</h1>
-                  <h1 className='max-w-fit' style={{ wordBreak: 'break-word' }}>{ingredient.amount}</h1>
-                  <h1 className='max-w-fit' style={{ wordBreak: 'break-word' }}>{ingredient.unit}</h1>
-                  <h1 className='text-red-500 text-xl font-bold cursor-pointer' onClick={() => deleteItemFromIngredient(ingredient.ingredient)}>X</h1>
-                </div>
-              ))
-            }
+            <div className='flex flex-col items-center justify-center gap-2 w-full text-center mb-10'>
+              {
+                ingredients?.map((ingredient, index) => (
+                  <div key={index} className={`flex flex-row items-center justify-between min-w-fit px-2 max-w-full gap-2 w-full ${index % 2 !== 0 ? "bg-gray-200 shadow-lg rounded-lg py-4" : ""}`}>
+                    <div
+                      key={index}
+                      className={`w-11/12 flex flex-col items-start max-w-fit justify-cente text-left px-4 lg:px-14`}
+                      style={{ wordBreak: 'break-word' }}
+                    >
+                      - {ingredient}
+                    </div>
+                    <div className='w-1/12 text-red-500 text-lg font-bold cursor-pointer' onClick={() => deleteItemFromIngredient(ingredient)}>
+                      X
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
           </div>
           <div className='w-full flex flex-col items-center justify-center gap-8'>
             <h1 className='text-4xl font-semibold w-full md:w-auto text-center lg:text-left'>Steps</h1>
@@ -445,7 +409,7 @@ const UploadForm = () => {
             <button onClick={addStep} className='px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-300'>Add step</button>
             <div className='flex flex-row items-center justify-between min-w-fit px-2 max-w-full gap-2 w-full'>
               <h1 className={`w-11/12 flex flex-col items-start max-w-fit justify-cente text-left px-4 lg:px-14`}>Steps</h1>
-              <h1 className='w-1/12 text-red-500 text-lg font-bold cursor-pointer text-center'>X</h1>
+              <h1 onClick={() => setSteps([])} className='w-1/12 text-red-500 text-lg font-bold cursor-pointer text-center'>X</h1>
             </div>
             <div className='flex flex-col items-center justify-center gap-2 w-full text-center mb-10'>
               {

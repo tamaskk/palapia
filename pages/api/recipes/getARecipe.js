@@ -9,17 +9,15 @@ export default async function handler(req, res) {
       return;
     }
 
-    const { email } = req.body;
+    const { name } = req.body;
 
-    if (!email) {
-      res.status(400).json({ message: 'Email is required in the request body' });
+    if (!name) {
+      res.status(400).json({ message: 'Name is required in the request body' });
       return;
     }
 
     const db = client.db();
 
-    // Fetch the user based on the provided email
-    const user = await db.collection('users').findOne({ email });
     const recipes = await db.collection('recipes').find().toArray();
 
     if (!recipes) {
@@ -27,16 +25,8 @@ export default async function handler(req, res) {
       return;
     }
 
-    if (!user) {
-      res.status(404).json({ message: 'User not found' });
-      return;
-    }
-
-    const likedRecipes = user.likedFoods;
-
-    // Filter the recipes based on the liked recipes
-    const filteredRecipes = recipes.filter((recipe) => likedRecipes.includes(recipe._id.toString()));
-
+    // Update filtering logic based on the correct field (name or email)
+    const filteredRecipes = recipes.filter((recipe) => recipe.name.toLowerCase().split(' ').join('-') === name);
 
     client.close();
 

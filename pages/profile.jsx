@@ -2,7 +2,7 @@ import { getSession } from "next-auth/react";
 import UserProfile from "../components/profile/user-profile";
 
 function ProfilePage() {
-  return <UserProfile />;
+  return <h1>Profil page</h1>;
 }
 
 export const getServerSideProps = async (context) => {

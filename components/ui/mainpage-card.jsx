@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { useMainContext } from '@/lib/maincontext';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const MainPageCard = ({ id, name, flag, description, people, time, difficulity, picture, liked, likedFoodArray, likedFoodArraySet }) => {
     const { data: session } = useSession();
@@ -81,16 +82,23 @@ const MainPageCard = ({ id, name, flag, description, people, time, difficulity, 
           console.error('Error:', error);
         }
       };
+
+      // i want to separete the foods name with - like baked-onion-in-oven
+      // then i want to make it lower case
+      // then i want to replace the - with a space
+
+      const linkToRecipe = name.toLowerCase().split(' ').join('-');
       
 
     return (
-        <article className="border-2 border-white max-w-[350px] cursor-pointer shadow-xl bg-white hover:border-gray-300 transition-all duration-300 rounded-lg">
-            <div className="w-[350px] h-[350px] overflow-hidden relative">
-                <div style={backgroundSettings} className="w-full h-full hover:scale-110 transition-all duration-300"></div>
+        <article className="border-2 border-white cursor-pointer shadow-xl bg-white hover:border-gray-300 transition-all duration-300 rounded-lg">
+            <Link href={`/recipes/${linkToRecipe}`}>
+            <div className="w-[350px] h-[350px] max-w-[350px] flex items-center justify-center overflow-hidden relative">
+                <div style={backgroundSettings} className="overflow-hidden w-[95%] h-[95%] hover:scale-110 transition-all duration-300 rounded-lg"></div>
                 <div className="absolute top-5 left-5" onClick={() => likeHandler(id)}>
                 <Image src={`/icons/${likedFoods.includes(id) ? "star": "unliked"}.svg`} width={35} height={35} alt="Like button"/>
                 </div>
-                <Image src={flag} width={35} height={35} className="absolute top-5 right-5" />
+                <Image src={flag} width={35} height={35} alt="Nationality of the recipe" className="absolute top-5 right-5" />
             </div>
             <div className="flex flex-col items-center justify-center gap-4">
                 <div className="text-center flex flex-col items-center justify-center gap-4 py-4">
@@ -99,19 +107,20 @@ const MainPageCard = ({ id, name, flag, description, people, time, difficulity, 
                 </div>
                 <div className="flex flex-row items-center justify-evenly gap-4 w-full max-w-[350px]">
                     <div className="flex flex-col items-center justify-center gap-2">
-                        <Image src="/icons/user.svg" width={25} height={25} />
+                        <Image src="/icons/user.svg" alt="User icon" width={25} height={25} />
                         <p className="text-sm text-gray-600">{people}</p>
                     </div>
                     <div className="flex flex-col items-center justify-center gap-2">
-                        <Image src="/icons/clock.svg" width={25} height={25} />
+                        <Image src="/icons/clock.svg" alt="Clock icon" width={25} height={25} />
                         <p className="text-sm text-gray-600">{time}</p>
                     </div>
                     <div className="flex flex-col items-center justify-center gap-2">
-                        <Image src="/icons/bomb.svg" width={25} height={25} />
+                        <Image src="/icons/bomb.svg" alt="Difficulity icon" width={25} height={25} />
                         <p className="text-sm text-gray-600">{difficulity}</p>
                     </div>
                     </div>
             </div>
+            </Link>
         </article>
     );
 };

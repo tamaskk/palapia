@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-const Input = ({id, type, label, onChangeHandler, ownStyle, ownStyleLabel}) => {
+const Input = ({id, type, label, onChangeHandler, ownStyle, ownStyleLabel, max }) => {
   return (
     <Fragment>
       <label htmlFor={id} className={`text-4xl font-semibold w-full md:w-auto text-center lg:text-left ${ownStyleLabel}`}>
@@ -12,6 +12,7 @@ const Input = ({id, type, label, onChangeHandler, ownStyle, ownStyleLabel}) => {
         type={type}
         onChange={onChangeHandler}
         required
+        maxLength={max}
       />
     </Fragment>
   );

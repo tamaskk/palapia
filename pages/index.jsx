@@ -1,75 +1,87 @@
-import Image from "next/image";
 import Sort from "../components/mainpage/sort";
 import MainPageCard from "@/components/ui/mainpage-card";
 import { useState, useEffect } from "react";
 import { getAllRecipe } from "@/lib/db";
-import { getACountry } from "@/lib/countries";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import { useMainContext } from "@/lib/maincontext";
 
 export default function Home({ recipes }) {
   const { data: session, status } = useSession();
 
-  const [filteredDatas, setFilteredDatas] = useState([])
+  const [filteredDatas, setFilteredDatas] = useState([]);
   const [recipeList, setRecipeList] = useState(recipes);
 
-  const router = useRouter();
-
-  const { setRequestStatus, setRequestError, likedFoods } = useMainContext();
-
-  const filterDatasHandler = (filterDatas) => {
-    setFilteredDatas(filterDatas.filter(data => data !== undefined));
-  }
+  const { filteredType, filteredTime, filteredCountry, filteredDifficulity } = useMainContext();
 
   useEffect(() => {
-    console.log(likedFoods);
-  }, [likedFoods]);
+    if (filteredDatas.includes('')) {
+      setFilteredDatas(filteredDatas.filter(data => data !== ''));
+    }
+  }, [filteredDatas])
 
+  const filterDatasHandler = (filterDatas) => {
+    setFilteredDatas(filterDatas);
+  }
 
   return (
     <div className="w-full h-full lg:max-w-[90%] xl:max-w-[95%] flex flex-col items-start justify-between px-5">
       <div className="w-full h-full lg:max-w-[90%] xl:max-w-[95%] flex flex-row items-start mt-2 justify-between px-0 lg:px-10">
         <Sort filterDatasHandler={filterDatasHandler} />
         <div className="flex flex-wrap px-2 items-center justify-center w-full gap-12 max-w-full lg:max-w-[85%] mt-14 lg:mt-0">
-          {filteredDatas
-            .filter((data) => data !== undefined)
-            .length > 0 &&
-            filterDatasHandler && (
-              <>
-                <div className="w-full h-10 self-center flex flex-row flex-wrap items-center justify-center gap-2 lg:gap-8 text-center pl-0 lg:pl-10 mb-20 lg:mb-0">
-                  <h1 className="text-xl font-semibold">Filters:</h1>
-                  {filteredDatas
-                    .filter((data) => data !== undefined)
-                    .filter((data) => data.length > 0)
-                    .map((data, index) => (
-                      <p
-                        className="min-w-fit cursor-pointer text-black p-2 border border-black rounded-lg"
-                        key={index}
-                        onClick={() => setFilteredDatas(filteredDatas.filter((item) => item !== data))}
-                      >
-                        {data}
-                      </p>
-                    ))}
-                </div>
-              </>
-            )}
+          {filteredDatas.filter((item) => item !== undefined).length !== 0 && (
+            <div className="w-full h-10 self-center flex flex-row flex-wrap items-center justify-center gap-2 lg:gap-8 text-center pl-0 lg:pl-10 mb-20 lg:mb-0">
+              <h1 className="text-xl font-semibold">Filters:</h1>
+              {filteredDatas
+                .filter((data) => data !== undefined)
+                .filter((data) => data.length > 0)
+                .map((data, index) => (
+                  <p
+                    className="min-w-fit cursor-pointer text-black p-2 border border-black rounded-lg"
+                    key={index}
+                  >
+                    {data}
+                  </p>
+                ))}
+            </div>
+          )}
 
-          {recipeList.map((recipe, index) => (
-            <MainPageCard
-              key={index}
-              id={recipe._id}
-              name={recipe.name}
-              description={recipe.description}
-              people={recipe.peoples}
-              time={recipe.time}
-              difficulity={recipe.difficulity}
-              picture={recipe.image}
-              flag={recipe.flag}
-            />
-          ))}
+          {filteredCountry || filteredDifficulity || filteredTime || filteredType ? (
+            recipeList
+              .filter(recipe => (
+                (filteredCountry?.length === 0 || (filteredCountry && filteredCountry.includes(recipe.nationality))) &&
+                (filteredType?.length === 0 || (filteredType && filteredType.includes(recipe.type))) &&
+                (filteredTime?.length === 0 || (filteredTime && filteredTime.includes(recipe.time))) &&
+                (filteredDifficulity?.length === 0 || (filteredDifficulity && filteredDifficulity.includes(recipe.difficulty)))
+              ))
+              .map((recipe, index) => (
+                <MainPageCard
+                  key={index}
+                  id={recipe._id}
+                  name={recipe.name}
+                  description={recipe.description}
+                  people={recipe.peoples}
+                  time={recipe.time}
+                  difficulity={recipe.difficulty}
+                  picture={recipe.image}
+                  flag={recipe.flag}
+                />
+              ))
+          ) : (
+            recipeList.map((recipe, index) => (
+              <MainPageCard
+                key={index}
+                id={recipe._id}
+                name={recipe.name}
+                description={recipe.description}
+                people={recipe.peoples}
+                time={recipe.time}
+                difficulity={recipe.difficulty}
+                picture={recipe.image}
+                flag={recipe.flag}
+              />
+            ))
+          )}
         </div>
-
       </div>
     </div>
   );
