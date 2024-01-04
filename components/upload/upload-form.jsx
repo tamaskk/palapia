@@ -234,17 +234,17 @@ const UploadForm = () => {
       <div className='flex flex-col items-center lg:items-start justify-start lg:flex-row gap-5 lg:gap-20'>
         <div className='flex flex-col items-start justify-center gap-10 w-full lg:w-1/2 max-w-full lg:max-w-[50%]'>
           <div className='flex flex-col items-center lg:items-start w-full gap-3'>
-            <Input label="Recipe name" placeholder="Enter recipe name" type="text" ownStyle="w-full" onChangeHandler={e => setRecipeName(e.target.value)}/>
+            <Input label="Recipe name" ownStyleLabel="text-2xl font-semibold w-full md:w-auto text-center lg:text-left mt-5 mb-2" placeholder="Enter recipe name" type="text" ownStyle="w-full" onChangeHandler={e => setRecipeName(e.target.value)}/>
           </div>
           <div className='flex flex-col items-center lg:items-start w-full gap-3'>
-            <Input label="Description" max={65} placeholder="Enter the description" type="text" ownStyle="w-full" onChangeHandler={e => setDescription(e.target.value)} />
+            <Input label="Description" ownStyleLabel="text-2xl font-semibold w-full md:w-auto text-center lg:text-left mt-5 mb-2" max={65} placeholder="Enter the description" type="text" ownStyle="w-full" onChangeHandler={e => setDescription(e.target.value)} />
           </div>
           <div className='grid grid-cols-1 lg:grid-cols-2 w-full gap-5'>
             <div className='flex flex-col items-center lg:items-start w-full gap-3'>
-              <Input label="Portions" placeholder="Portions" type="number" ownStyle="w-full" onChangeHandler={e => setPortions(e.target.value)} />
+              <Input label="Portions" ownStyleLabel="text-2xl font-semibold w-full md:w-auto text-center lg:text-left mt-5 mb-2" placeholder="Portions" type="number" ownStyle="w-full" onChangeHandler={e => setPortions(e.target.value)} />
             </div>
             <div className='flex flex-col items-center lg:items-start w-full gap-3'>
-              <label htmlFor="time" className='text-4xl font-semibold w-full md:w-auto text-center lg:text-left'>Time</label>
+              <label htmlFor="time" className='text-2xl font-semibold w-full md:w-auto text-center lg:text-left mt-5 mb-2'>Time</label>
               <select name="time" onChange={e => setTime(e.target.value)} id="time" className='p-3 text-xl w-full active:outline-none focus:outline-none shadow-xl rounded-md border-b border-b-gray-600'>
                 <option disabled value="">Select time</option>
                 <option value=">1h">Less than 1 hour</option>
@@ -253,8 +253,8 @@ const UploadForm = () => {
               </select>
             </div>
           </div>
-          <div className='w-full flex flex-col items-center justify-center gap-8'>
-            <h1 className='text-4xl font-semibold w-full md:w-auto text-center lg:text-left'>Ingredients</h1>
+          <div className='w-full lg:flex hidden flex-col items-center justify-center gap-8'>
+            <h1 className='text-2xl font-semibold w-full md:w-auto text-center lg:text-left mt-5 mb-2'>Ingredients</h1>
             <div className='grid grid-cols-1 items-center w-full gap-10 max-w-full'>
               <div className='flex flex-col items-center justify-center'>
                 <label>Ingredient</label>
@@ -288,7 +288,7 @@ const UploadForm = () => {
           </div>
         <div className='flex flex-col items-center justify-center gap-10 w-full lg:w-1/2 max-w-full lg:max-w-[50%]'>
           <div className='flex flex-col items-center lg:items-start w-full gap-3'>
-            <label className="text-4xl font-semibold w-full md:w-auto text-center md:text-left">
+            <label className="text-2xl font-semibold w-full md:w-auto text-center lg:text-left mt-5 mb-2">
               Nationality
             </label>
             <select
@@ -310,11 +310,11 @@ const UploadForm = () => {
             </select>
           </div>
           <div className='flex flex-col items-center lg:items-start w-full gap-3'>
-            <Input label="Picture" placeholder="Enter the picture url" type="text" ownStyle="w-full" onChangeHandler={e => setPicture(e.target.value)} />
+            <Input label="Picture" placeholder="Enter the picture url" type="text" ownStyleLabel="text-2xl font-semibold w-full md:w-auto text-center lg:text-left mt-5 mb-2" ownStyle="w-full" onChangeHandler={e => setPicture(e.target.value)} />
           </div>
           <div className='flex flex-col lg:flex-row items-center lg:items-start w-full gap-3'>
             <div className='flex flex-col items-center lg:items-start w-full gap-3'>
-              <label className="text-4xl font-semibold w-full md:w-auto text-center md:text-left">
+              <label className="text-2xl font-semibold w-full md:w-auto text-center lg:text-left mt-5 mb-2">
                 Difficulity
               </label>
               <select
@@ -340,7 +340,7 @@ const UploadForm = () => {
               </select>
             </div>
             <div className='flex flex-col items-center lg:items-start w-full gap-3'>
-              <label className="text-4xl font-semibold w-full md:w-auto text-center md:text-left">
+              <label className="text-2xl font-semibold w-full md:w-auto text-center lg:text-left mt-5 mb-2">
                 Type
               </label>
               <select
@@ -367,7 +367,7 @@ const UploadForm = () => {
             </div>
           </div>
           <div className='w-full flex lg:hidden flex-col items-center justify-center gap-8'>
-            <h1 className='text-4xl font-semibold w-full md:w-auto text-center lg:text-left'>Ingredients</h1>
+            <h1 className='text-2xl font-semibold w-full md:w-auto text-center lg:text-left mt-5 mb-2'>Ingredients</h1>
             <div className='grid grid-cols-1 items-center w-full gap-10 max-w-full'>
               <div className='flex flex-col items-center justify-center'>
                 <label>Ingredient</label>
@@ -399,7 +399,7 @@ const UploadForm = () => {
             </div>
           </div>
           <div className='w-full flex flex-col items-center justify-center gap-8'>
-            <h1 className='text-4xl font-semibold w-full md:w-auto text-center lg:text-left'>Steps</h1>
+            <h1 className='text-2xl font-semibold w-full md:w-auto text-center lg:text-left mt-5 mb-2'>Steps</h1>
             <div className='grid grid-cols-1 items-center w-full gap-10 max-w-full'>
               <div className='flex flex-col items-center justify-center'>
                 <label>Step</label>

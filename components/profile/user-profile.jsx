@@ -9,6 +9,7 @@ const UserProfile = () => {
   const [user, setUser] = useState();
   const [page, setPage] = useState("personal");
   const [ownRecipes, setOwnRecipes] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     console.log(ownRecipes);
@@ -16,6 +17,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
+      setLoading(true);
       try {
         const response = await fetch("/api/users/users");
         if (!response.ok) {
@@ -25,6 +27,7 @@ const UserProfile = () => {
         const data = await response.json();
         const user = data.users?.filter((user) => user.email === session?.user.email);
         setUser(user[0]);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching user data:", error.message);
       }
@@ -34,6 +37,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     const fetchRecipes = async () => {
+      setLoading(true);
       try {
         const response = await fetch("/api/recipes/getOwnRecipes", {
           method: "POST",
@@ -49,6 +53,7 @@ const UserProfile = () => {
 
         const data = await response.json();
         setOwnRecipes(data.ownRecipes);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching recipes:", error.message);
       }
@@ -57,10 +62,13 @@ const UserProfile = () => {
     fetchRecipes();
   }, [session]);
 
+
   // Loading state
   if (status === "loading") {
     return <p>Loading...</p>;
   }
+
+
 
   return (
     <section className="w-screen h-auto flex justify-center items-center">
@@ -86,7 +94,15 @@ const UserProfile = () => {
             My recipes
           </button>
         </div>
-        {page === "personal" ? <PersonalInformation user={user} /> : page === "settings" ? <Settings ownRecipes={ownRecipes} /> : page === "recipe" ? <MyRecipes ownRecipes={ownRecipes} /> : <p>No page found</p>}
+        {page === "personal" ? (
+          <PersonalInformation loading={loading} user={user} />
+        ) : page === "settings" ? (
+          <Settings loading={loading} ownRecipes={ownRecipes} />
+        ) : page === "recipe" ? (
+          <MyRecipes ownRecipes={ownRecipes} />
+        ) : (
+          <p>No page found</p>
+        )}
       </div>
     </section>
   );

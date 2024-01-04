@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PersonalInformation = ({ user }) => {
+const PersonalInformation = ({ loading, user }) => {
   console.log(user?.dateOfRegister)
 
   const getDate = user?.dateOfRegister
@@ -12,6 +12,16 @@ const month = date.getMonth() + 1; // Month is zero-based, so we add 1
 const day = date.getDate();
 
 const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
+
+  if (loading) {
+    return (
+      <div className="w-full h-auto">
+        <div className='flex flex-col items-center justify-center'>
+          <h1 className="text-2xl font-bold">Loading...</h1>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="w-full h-auto">

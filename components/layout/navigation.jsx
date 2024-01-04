@@ -66,17 +66,24 @@ const Navigation = () => {
           </ul>
         </div>
       </nav>
-      <div className="fixed lg:hidden top-5 right-5 z-[9999] flex flex-col gap-1" onClick={navToggle}>
+
+      <div className="w-screen h-20 flex lg:hidden flex-row items-center justify-between px-10 bg-white">
+      <Link href="/" onClick={navToggle} className="text-orange-800 text-3xl font-black font-primary">Palapia</Link>
+
+      <div className="z-[9999] flex flex-col gap-1" onClick={navToggle}>
         <div className="w-7 h-1 bg-black"></div>
         <div className="w-7 h-1 bg-black"></div>
         <div className="w-7 h-1 bg-black"></div>
+      </div>
       </div>
       <nav className={`lg:hidden w-screen h-screen fixed z-[9998] max-w-screen flex flex-col items-center justify-center gap-5 overflow-x-hidden right-0 bg-[#ffffff] rounded-b-xl px-10 ${navOpened ? "translate-x-0" : "translate-x-[2000px]"} transition-all duration-300 `}>
         <Link href="/" onClick={navToggle} className="text-orange-800 text-5xl font-black font-primary mb-16">Palapia</Link>
         <Link href="/upload" onClick={navToggle}>
           <Image src="/icons/upload.svg" alt="star" width={24} height={24} className="hover:scale:105 transition-all duration-300" />
         </Link>
+        <Link href="/likedfoods" onClick={navToggle}>
         <Image onClick={navToggle} src="/icons/star.svg" alt="star" width={24} height={24} />
+        </Link>
         {status === "authenticated" && (
               <div
                 className={`flex flex-col items-center justify-center font-bold text-xl gap-1 cursor-pointer group`}

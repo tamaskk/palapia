@@ -15,11 +15,15 @@ function ProfilePage() {
         setIsLoading(false);
       } else {
         router.replace("/auth");
-        setRequestError('You must be signed in to see your liked recipes.');
+        setRequestError('You must be signed in to see your profile.');
         setRequestStatus('error');
       }
     });
   }, [router]);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   return <UserProfile />;
 }

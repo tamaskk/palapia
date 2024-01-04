@@ -1,18 +1,20 @@
 import React, { Fragment } from "react";
 
-const Input = ({id, type, label, onChangeHandler, ownStyle, ownStyleLabel, max }) => {
+const Input = ({id, type, label, onChangeHandler, ownStyle, ownStyleLabel, max, placeholder, value }) => {
   return (
     <Fragment>
-      <label htmlFor={id} className={`text-4xl font-semibold w-full md:w-auto text-center lg:text-left ${ownStyleLabel}`}>
+      <label htmlFor={id} className={ownStyleLabel}>
         {label}
       </label>
       <input
-        className={`p-3 text-xl active:outline-none focus:outline-none shadow-xl rounded-md border-b border-b-gray-600 ${ownStyle}`}
+        className={`p-3 text-center text-lg placeholder:text-center active:outline-none focus:outline-none shadow-xl rounded-md border-b border-b-gray-600 ${ownStyle}`}
         id={id}
         type={type}
+        value={value}
         onChange={onChangeHandler}
         required
         maxLength={max}
+        placeholder={placeholder}
       />
     </Fragment>
   );
