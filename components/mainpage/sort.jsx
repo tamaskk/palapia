@@ -85,7 +85,7 @@ const Sort = ({ filterDatasHandler }) => {
                             <RadioInput setInputValue={setFilteredDifficulity} name='difficulity' value='Hard' label='Hard' id="Hard" />
                         </div>
                     </div>
-                    <div onClick={filterOpenToggle} className={`p-2 absolute top-5 right-5 text-2xl font-bold`}>
+                    <div onClick={filterOpenToggle} className={`p-2 absolute lg:hidden top-5 right-5 text-2xl font-bold`}>
                         X
                     </div>
                 </div>
