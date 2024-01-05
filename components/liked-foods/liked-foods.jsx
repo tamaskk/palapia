@@ -15,7 +15,7 @@ const LikedFoodsPage = ({ recipes }) => {
 
   return (
     <div className="w-full h-full lg:max-w-[90%] xl:max-w-[95%] flex flex-col items-start justify-between px-5 pt-14 gap-10 self-start">
-      <h1 className="text-4xl font-semibold w-full text-center">Your favourite recipes</h1>
+      <h1 className="text-4xl font-semibold w-full text-center">Your favourite recipe</h1>
       <div className="flex flex-wrap items-center justify-center w-full gap-12 max-w-full lg:mt-0">
       {
       likedRecipes?.map((recipe, index) => (
