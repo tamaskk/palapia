@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Input from '@/components/ui/input'
 import { useMainContext } from '@/lib/maincontext'
 import { useSession } from 'next-auth/react'
-import Popup from '@/components/popup/popup'
 
 const Settings = () => {
   const { data: session, status } = useSession();
@@ -76,7 +75,6 @@ const Settings = () => {
 
   return (
     <div className='w-screen h-auto flex flex-col items-center justify-center pb-10'>
-      {requestError && requestStatus && <Popup message={requestError} status={requestStatus} />}
       <div className='w-1/2 flex flex-col items-center justify-center gap-5'>
         <div className='flex flex-col items-center justify-center gap-8'>
           <div className='flex flex-col items-center justify-center'>

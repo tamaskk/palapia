@@ -1,8 +1,9 @@
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import PersonalInformation from "./personal-information";
 import Settings from "./settings";
 import MyRecipes from "./my-recipes";
+import Head from 'next/head'
 
 const UserProfile = () => {
   const { data: session, status } = useSession();
@@ -71,6 +72,12 @@ const UserProfile = () => {
 
 
   return (
+    <Fragment>
+            <Head>
+        <title>Profile</title>
+        <meta name="description" content="Your user profile with setting, personal informations and your recipes." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
     <section className="w-screen h-auto flex justify-center items-center">
       <div className="w-full h-full lg:max-w-[90%] xl:max-w-[95%] flex flex-col items-center justify-between px-5 pt-14 gap-10 self-start">
         <h1 className="text-5xl font-bold text-center">Your User Profile</h1>
@@ -105,6 +112,7 @@ const UserProfile = () => {
         )}
       </div>
     </section>
+    </Fragment>
   );
 };
 

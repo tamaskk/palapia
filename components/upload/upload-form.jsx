@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import Input from '../ui/input'
 import { useMainContext } from '@/lib/maincontext'
-import Popup from '../popup/popup'
 import { getCountries } from '@/lib/countries'
 import { useSession } from 'next-auth/react'
+import Head from 'next/head'
 
 const UploadForm = () => {
   const { data: session, status } = useSession();
@@ -34,10 +34,10 @@ const UploadForm = () => {
 
   const userEmail = session?.user.email;
 
-  const createRecipe = async ({ name, description, peoples, time, ingredients, image, nationality, difficulity, type, steps, userEmail, flag, isApproved}) => {
+  const createRecipe = async ({ name, description, peoples, time, ingredients, image, nationality, difficulity, type, steps, userEmail, flag, isApproved, requestedToDelete}) => {
     const response = await fetch('/api/recipes/create', {
       method: 'POST',
-      body: JSON.stringify({ name, description, peoples, time, ingredients, image, nationality, difficulity, type, steps, userEmail, flag, isApproved}),
+      body: JSON.stringify({ name, description, peoples, time, ingredients, image, nationality, difficulity, type, steps, userEmail, flag, isApproved, requestedToDelete}),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -215,7 +215,8 @@ const UploadForm = () => {
         steps: steps,
         userEmail: userEmail,
         flag: flag,
-        isApproved: false
+        isApproved: false,
+        requestedToDelete: false
       });
     } catch (error) {
       setRequestError(error.message);
@@ -225,8 +226,13 @@ const UploadForm = () => {
   }
 
   return (
+    <Fragment>
+            <Head>
+        <title>Upload</title>
+        <meta name="description" content="Upload your favourite recipe from different cuisines" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
     <section className='min-h-screen flex flex-col items-center justify-center w-full max-w-[95%] h-full relative'>
-      {requestError && requestStatus && <Popup message={requestError} status={requestStatus} />}
       <h1 className='text-2xl font-bold text-center mb-10 mt-20 lg:mb-20'>Upload your favourite recipe!</h1>
       <button onClick={uploadHandler} className='mb-10 static self-center lg:absolute top-5 right-5 px-4 text-xl py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-300'>
         Upload
@@ -433,6 +439,7 @@ const UploadForm = () => {
         </div>
       </div>
     </section>
+    </Fragment>
   )
 }
 

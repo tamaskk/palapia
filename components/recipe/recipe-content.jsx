@@ -1,6 +1,7 @@
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
+import Head from 'next/head'
 
 const RecipeContent = ({ recipe }) => {
     const { data: session, status } = useSession();
@@ -31,11 +32,17 @@ const RecipeContent = ({ recipe }) => {
 
 
     return (
+        <Fragment>
+                  <Head>
+        <title>{recipe.name}</title>
+        <meta name="description" content={`Recipe of the ${recipe.name}`} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
         <div className="w-full h-full lg:max-w-[90%] xl:max-w-[95%] flex flex-col items-center justify-between gap-4 mt-2 px-5">
             <div className='max-w-[800px] mt-16'>
                 <Image src={recipe.image} layout='responsive' width={800} height={800} alt="Recipe image" className='rounded-lg' />
             </div>
-            <h1 className='text-6xl font-bold text-center'>{recipe.name}
+            <h1 className='text-5xl lg:text-6xl font-bold text-center flex flex-col lg:flex-row'>{recipe.name}
                 <span className='text-4xl font-normal'> by {name}</span>
             </h1>
             <p className='text-xl text-gray-500 mb-2 text-center'>{recipe.description}</p>
@@ -75,8 +82,8 @@ const RecipeContent = ({ recipe }) => {
                     </ul>
                 </div>
             </div>
-            
         </div>
+        </Fragment>
     )
 }
 

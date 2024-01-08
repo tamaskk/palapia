@@ -11,7 +11,7 @@ const handler = async (req, res) => {
 
     const data = req.body;
 
-    const { id, email } = data;
+    const { id, name, email } = data;
 
     try {
         const client = await connectToDatabase();
@@ -27,6 +27,7 @@ const handler = async (req, res) => {
 
         const result = await db.collection("deleteRequest").insertOne({
             id,
+            name,
             email
         });
 

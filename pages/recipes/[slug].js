@@ -3,10 +3,12 @@ import RecipeContent from "../../components/recipe/recipe-content";
 import { getAllRecipe } from "@/lib/db";
 import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
+import { useMainContext } from "@/lib/maincontext";
 
 const SingleRecipePage = (props) => {
   const [loading, setLoading] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
+  const { setRequestError, setRequestStatus } = useMainContext();
 
   useEffect(() => {
     getSession().then((session) => {

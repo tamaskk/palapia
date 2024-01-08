@@ -12,7 +12,7 @@ const handler = async (req, res) => {
 
   const data = req.body;
 
-  const { name, description, peoples, time, ingredients, image, nationality, difficulity, type, steps, userEmail, flag, isApproved } = data;
+  const { name, description, peoples, time, ingredients, image, nationality, difficulity, type, steps, userEmail, flag, isApproved, requestedToDelete } = data;
 
   try {
     const client = await connectToDatabase();
@@ -31,7 +31,8 @@ const handler = async (req, res) => {
       steps, 
       userEmail, 
       flag,
-      isApproved
+      isApproved,
+      requestedToDelete
     });
 
     res.status(201).json({ message: "Succesfully sended for approval! As soon as we approve we will notify you in email!" });
