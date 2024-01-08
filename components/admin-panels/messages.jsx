@@ -57,8 +57,8 @@ const Messages = () => {
 
   return (
     <div className='w-full h-full flex flex-row items-start jutsify-center gap-8 p-4'>
-      {messages?.map((message) => (
-        <div className='bg-white shadow-lg rounded-lg w-1/4 h-auto py-8 px-4 text-center' onClick={() => handleAnswer(message)}>
+      {messages?.map((message, index) => (
+        <div key={index} className='bg-white shadow-lg rounded-lg w-1/4 h-auto py-8 px-4 text-center' onClick={() => handleAnswer(message)}>
           <div className='flex flex-col items-center justify-between p-4 w-full'>
             <div className='flex flex-col w-full'>
               <span className='text-gray-600 font-bold text-xl'>{message.name}</span>

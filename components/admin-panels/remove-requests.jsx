@@ -35,7 +35,7 @@ const RemoveRequests = () => {
         <div className='grid grid-cols-1 bg-white rounded-md shadow-lg overflow-y-auto'>
         <div className='flex flex-row items-center justify-between p-4'>
             <h1 className='font-semibold'>Recipe name</h1>
-            <p className='font-semibold'>Owner's email</p>
+            <p className='font-semibold'>Owner s email</p>
             <button disabled className='bg-red-600 text-white rounded-md p-2'>Delete</button>
             </div>
         {allRemoveRequests.map((request, index) => (
