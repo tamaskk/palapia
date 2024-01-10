@@ -55,7 +55,7 @@ const Sort = ({ filterDatasHandler }) => {
                         <button onClick={clearFilter}>Clear the filter</button>
                         <div>
                             <p className='lg:text-xl xl:text-2xl font-bold'>Nationality</p>
-                            <select onChange={e => setFilteredCountry(e.target.value === "all" ? "" : e.target.value)} className='text-sm p-2 w-28 lg:w-32 xl:w-full rounded-lg focus:outline-none active:outline-none border-b-2 border-gray-300'>
+                            <select value={filteredCountry} onChange={e => setFilteredCountry(e.target.value === "all" ? "" : e.target.value)} className='text-sm p-2 w-28 lg:w-32 xl:w-full rounded-lg focus:outline-none active:outline-none border-b-2 border-gray-300'>
                                 <option value="all">All</option>
                                 {countries && countries?.map((country, index) => (
                                     <option key={index} value={country.name.common}>

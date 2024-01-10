@@ -1,24 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useMainContext } from '../../lib/maincontext'
 
 const Messages = () => {
-  const [messages, setMessages] = useState([]);
   const [answerPanel, setAnswerPanel] = useState(false);
   const [choosen, setChoosen] = useState(null);
   const [answer, setAnswer] = useState('');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch('/api/contact/contact');
-        const data = await res.json();
-        setMessages(data.result);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  const { messages } = useMainContext();
 
-    fetchData();
-  }, []);
+  useEffect(() =>  {
+    console.log(choosen)
+  }, [choosen])
 
   // Initialize SendGrid API key outside the component
 
@@ -28,27 +20,48 @@ const Messages = () => {
       subject: 'Palapia - Contact',
       text: answer,
     };
-
+  
     try {
-      console.log(choosen.email)
-      console.log(answer)
-      const response = await fetch('/api/contact/sendEmail', {
+      const responseEmail = await fetch('/api/contact/sendEmail', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(emailData),
       });
-
-      if (response.ok) {
-        console.log('Email sent successfully');
+  
+      if (responseEmail.ok) {
+        alert('Email sent successfully');
+  
+        try {
+          const responseDatabase = await fetch('/api/contact/contact', {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: choosen._id, answer: answer }), // Assuming choosen._id is the correct property
+          });
+  
+          if (responseDatabase.ok) {
+            alert('Changed in database');
+          } else {
+            alert('Error changing in database');
+          }
+        } catch (errorDatabase) {
+          console.error('Error changing in database:', errorDatabase);
+          alert('Error changing in database');
+        }
+  
       } else {
-        console.error('Error sending emaidsal');
+        alert('Error sending email:', responseEmail.status);
       }
     } catch (error) {
-      console.error('Error sending emailasd:', error);
+      console.error('Error sending email:', error);
+      alert('Error sending email:', error.message);
     }
   };
+  
+  
 
   const handleAnswer = (message) => {
     setAnswerPanel(!answerPanel);
@@ -56,8 +69,8 @@ const Messages = () => {
   };
 
   return (
-    <div className='w-full h-full flex flex-row items-start jutsify-center gap-8 p-4'>
-      {messages?.map((message, index) => (
+    <div className='w-full h-full flex flex-row flex-wrap max-w-full items-start jutsify-center gap-8 p-4 overflow-y-auto'>
+      {messages?.filter((message => message.answered === false)).length > 0 ? messages?.filter((message => message.answered === false)).map((message, index) => (
         <div key={index} className='bg-white shadow-lg rounded-lg w-1/4 h-auto py-8 px-4 text-center' onClick={() => handleAnswer(message)}>
           <div className='flex flex-col items-center justify-between p-4 w-full'>
             <div className='flex flex-col w-full'>
@@ -66,6 +79,26 @@ const Messages = () => {
             </div>
             <div className='flex flex-col'>
               <span className='text-gray-400 text-xs'>{message.date}</span>
+              <span className='text-red-600'>Not answered</span>
+            </div>
+          </div>
+          <div className='flex flex-col items-start justify-start p-4 w-full text-center'>
+            <span className='text-gray-600 text-sm w-full'>{message.message}</span>
+          </div>
+        </div>
+      )) : <div className='text-6xl w-full text-center font-bold p-4'>
+      No message to answer
+  </div>}
+            {messages?.filter((message => message.answered === true)).map((message, index) => (
+        <div key={index} className='bg-white shadow-lg rounded-lg w-1/4 h-auto py-8 px-4 text-center' onClick={() => handleAnswer(message)}>
+          <div className='flex flex-col items-center justify-between p-4 w-full'>
+            <div className='flex flex-col w-full'>
+              <span className='text-gray-600 font-bold text-xl'>{message.name}</span>
+              <span className='text-gray-400 text-xs'>{message.email}</span>
+            </div>
+            <div className='flex flex-col'>
+              <span className='text-gray-400 text-xs'>{message.date}</span>
+              <span className='text-green-600'>Answered</span>
             </div>
           </div>
           <div className='flex flex-col items-start justify-start p-4 w-full text-center'>
@@ -91,6 +124,12 @@ const Messages = () => {
           <div className='flex flex-col items-start justify-start p-4 w-full text-center'>
             <span className='text-gray-600 text-sm w-full'>{choosen.message}</span>
           </div>
+          {
+            choosen.answer && 
+            <div className='flex flex-col items-start justify-start p-4 w-full text-center'>
+            <span className='text-gray-600 text-sm w-full'>Answer: {choosen.answer}</span>
+          </div>
+          }
           <div className='flex flex-col items-start justify-start p-4 w-full text-center'>
             <textarea className='w-full h-32 border border-gray-200 rounded-lg p-4 text-gray-600 text-sm' onChange={e => setAnswer(e.target.value)} placeholder='Answer' />
           </div>

@@ -43,14 +43,14 @@ const ApproveRecipes = ({ allRecipe }) => {
                 to_email: email,
                 link: link
             };
-    
+
             const response = await emailjs.send(
                 'service_ld2kgsl',
                 'template_uklelpn',
                 templateParams,
                 'm7KF6JVhAXeRyhv8J'
             );
-    
+
             console.log('Email sent successfully:', response);
             alert('Successfully approved the recipe!');
         } catch (error) {
@@ -58,7 +58,7 @@ const ApproveRecipes = ({ allRecipe }) => {
             alert('Failed to approve the recipe. Please try again later.');
         }
     };
-    
+
 
     const declineHandler = async (id, email) => {
         const extraInfo = prompt("Please enter the reason for declining the recipe:", "It's not good enough")
@@ -92,6 +92,14 @@ const ApproveRecipes = ({ allRecipe }) => {
         panelHandler()
     }
 
+    if (allRecipe.recipes.length === 0) {
+        return (
+            <div className='text-6xl w-full text-center font-bold'>
+                No recipe to approve
+            </div>
+        )
+    }
+
     return (
         <div className='w-full h-full flex flex-row items-start justify-center relative'>
             {
@@ -121,7 +129,7 @@ const ApproveRecipes = ({ allRecipe }) => {
                 </div>
             }
             <div className='grid grid-cols-4 w-full h-full gap-4 overflow-y-auto overflow-x-hidden p-4'>
-                {allRecipe.recipes.filter((recipe) => recipe.isApproved === false).map((recipe, index) => (
+                {allRecipe.recipes.filter((recipe) => recipe.isApproved === false).length > 0 ? allRecipe.recipes.filter((recipe) => recipe.isApproved === false).map((recipe, index) => (
                     <div key={index} className='relative flex flex-col items-center justify-center gap-3 border-2 border-black rounded-lg text-xl font-bold '>
                         <h1>{recipe.name}</h1>
                         <h1>{recipe.userEmail}</h1>
@@ -135,7 +143,9 @@ const ApproveRecipes = ({ allRecipe }) => {
 
                         </div>
                     </div>
-                ))}
+                )) : <div className='text-6xl w-full text-center font-bold'>
+                    No recipe to approve
+                </div>}
             </div>
         </div>
     )

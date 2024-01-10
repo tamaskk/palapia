@@ -57,6 +57,7 @@ export default function Home({ recipes }) {
                   (filteredCountry?.length === 0 || (filteredCountry && filteredCountry.includes(recipe.nationality))) &&
                   (filteredType?.length === 0 || (filteredType && filteredType.includes(recipe.type))) &&
                   (filteredTime?.length === 0 || (filteredTime && filteredTime.includes(recipe.time))) &&
+                  (recipe.isApproved === true) &&
                   (filteredDifficulity?.length === 0 || (filteredDifficulity && filteredDifficulity.includes(recipe.difficulty)))
                 ))
                 .map((recipe, index) => (
@@ -73,7 +74,7 @@ export default function Home({ recipes }) {
                   />
                 ))
             ) : (
-              recipeList.map((recipe, index) => (
+              recipeList.filter((recipe) => recipe.isApproved === true).map((recipe, index) => (
                 <MainPageCard
                   key={index}
                   id={recipe._id}

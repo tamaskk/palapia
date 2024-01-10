@@ -41,7 +41,7 @@ const Login = () => {
   }, [session]);
 
   return (
-    <div className='absolute top-0 right-0 left-0 w-screen h-screen max-h-screen flex flex-col items-start justify-start overflow-hidden'>
+    <div className='absolute top-0 right-0 left-0 w-screen h-screen max-h-screen flex flex-col items-start justify-start overflow-hidden overflow-y-hidden'>
       <div className='w-screen h-24 bg-black flex flex-row items-center justify-around'>
         <Link href="/" className="text-5xl font-bold text-white">Palapia</Link>
         <h1 className="text-5xl font-bold text-white">Admin</h1>

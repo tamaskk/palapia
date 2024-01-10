@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useMainContext } from '../../lib/maincontext'
 
 const AdminMenu = ({ allRecipes }) => {
-    const { choosenMenu, setChoosenMenu, allRemoveRequests, allUsers } = useMainContext()
+    const { choosenMenu, setChoosenMenu, allRemoveRequests, allUsers, messages } = useMainContext()
 
 
     
@@ -24,8 +24,8 @@ const AdminMenu = ({ allRecipes }) => {
                 <li onClick={() => setChoosenMenu("All Users")} className={`w-full h-[10%] border border-black text-2xl font-bold flex flex-row items-center justify-center gap-2 cursor-pointer hover:bg-white transition-all duration-300 ${choosenMenu === "All Users" ? "bg-yellow-400" : ""} `}>
                     All Users <span className="text-sm font-bold text-white bg-green-600 rounded-full w-6 h-6 flex flex-row items-center justify-center">{allUsers?.length}</span>
                 </li>
-                <li onClick={() => setChoosenMenu("Messages")} className={`w-full h-[10%] border border-black text-2xl font-bold flex flex-row items-center justify-center cursor-pointer hover:bg-white transition-all duration-300 ${choosenMenu === "Messages" ? "bg-yellow-400" : ""} `}>
-                    Messages
+                <li onClick={() => setChoosenMenu("Messages")} className={`w-full h-[10%] border border-black text-2xl font-bold flex flex-row items-center justify-center gap-2 cursor-pointer hover:bg-white transition-all duration-300 ${choosenMenu === "Messages" ? "bg-yellow-400" : ""} `}>
+                    Messages <span className="text-sm font-bold text-white bg-red-600 rounded-full w-6 h-6 flex flex-row items-center justify-center">{messages?.filter(message => message.answered === false).length}</span>
                 </li>
                 <li onClick={() => setChoosenMenu("Lorem")} className={`w-full h-[10%] border border-black text-2xl font-bold flex flex-row items-center justify-center cursor-pointer hover:bg-white transition-all duration-300 ${choosenMenu === "Lorem" ? "bg-yellow-400" : ""} `}>
                     Lorem

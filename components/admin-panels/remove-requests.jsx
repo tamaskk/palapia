@@ -5,8 +5,6 @@ import { useSession } from 'next-auth/react';
 const RemoveRequests = () => {
     const { data: session, status } = useSession();
 
-    const [requests, setRequests] = useState([])
-
     const { loading, allRemoveRequests } = useMainContext();
 
     const removeItem = async (id) => {
@@ -38,13 +36,15 @@ const RemoveRequests = () => {
             <p className='font-semibold'>Owner s email</p>
             <button disabled className='bg-red-600 text-white rounded-md p-2'>Delete</button>
             </div>
-        {allRemoveRequests.map((request, index) => (
+        {allRemoveRequests.length > 0 ? allRemoveRequests.map((request, index) => (
             <div key={request._id} className={`flex flex-row items-center justify-between p-4 ${index % 2 === 0 && "bg-gray-200"} `}>
             <h1 className='font-semibold'>{request.name}</h1>
             <p className='font-semibold'>{request.email}</p>
             <button className='bg-red-600 text-white rounded-md p-2' onClick={() => removeItem(request.id)}>Delete</button>
             </div>
-        ))}
+        )) : <div className='text-6xl w-full text-center font-bold p-4'>
+        No recipe to remove
+    </div>}
         </div>
     </div>
   )
