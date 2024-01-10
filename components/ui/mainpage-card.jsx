@@ -5,7 +5,7 @@ import { useMainContext } from '@/lib/maincontext';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-const MainPageCard = ({ id, name, flag, description, people, time, difficulity, picture, liked, likedFoodArray, likedFoodArraySet }) => {
+const MainPageCard = ({ id, name, flag, description, people, time, difficulity, picture }) => {
     const { data: session } = useSession();
     const { setLikedFoods, likedFoods, setRequestError, setRequestStatus } = useMainContext()
     const router = useRouter();

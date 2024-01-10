@@ -33,7 +33,7 @@ export default function Home({ recipes }) {
       <div className="w-full h-full lg:max-w-[90%] xl:max-w-[95%] flex flex-col items-start justify-between px-5">
         <div className="w-full h-full lg:max-w-[90%] xl:max-w-[95%] flex flex-row items-start mt-2 justify-between px-0 lg:px-10">
           <Sort filterDatasHandler={filterDatasHandler} />
-          <div className="flex flex-wrap px-2 items-center justify-center w-full gap-12 max-w-full lg:max-w-[85%] mt-14 lg:mt-0">
+          <div className="flex flex-wrap px-2 items-center justify-center w-full gap-12 max-w-full lg:max-w-[85%] my-14 lg:mt-0">
             {filteredDatas.filter((item) => item !== undefined).length !== 0 && (
               <div className="w-full h-10 self-center flex flex-row flex-wrap items-center justify-center gap-2 lg:gap-8 text-center pl-0 lg:pl-10 mb-20 lg:mb-0">
                 <h1 className="text-xl font-semibold">Filters:</h1>
@@ -68,7 +68,7 @@ export default function Home({ recipes }) {
                     description={recipe.description}
                     people={recipe.peoples}
                     time={recipe.time}
-                    difficulity={recipe.difficulty}
+                    difficulity={recipe.difficulity}
                     picture={recipe.image}
                     flag={recipe.flag}
                   />
@@ -82,7 +82,7 @@ export default function Home({ recipes }) {
                   description={recipe.description}
                   people={recipe.peoples}
                   time={recipe.time}
-                  difficulity={recipe.difficulty}
+                  difficulity={recipe.difficulity}
                   picture={recipe.image}
                   flag={recipe.flag}
                 />
