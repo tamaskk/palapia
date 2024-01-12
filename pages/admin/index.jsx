@@ -13,43 +13,59 @@ import { useRouter } from 'next/router';
 const Login = () => {
   const { data: session, status } = useSession();
   const [allRecipes, setAllRecipes] = useState([]);
+  const [loading, setLoading] = useState(true)
   const { choosenMenu, setRequestError, setRequestStatus } = useMainContext();
   const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Wait until session.user.email is defined
+        if (!session?.user?.email) {
+          return;
+        }
+  
         const response = await fetch('/api/users/users');
-
+  
         if (!response.ok) {
           // Handle non-successful response (e.g., server error)
           throw new Error(`Failed to fetch data: ${response.statusText}`);
         }
-
+  
         const users = await response.json();
-
-        // Check if the user is an admin
-        const isAdmin = users.users.find(user => user.email === session.user?.email)?.isAdmin;
-
-        if (!isAdmin) {
+        const userEmail = session.user.email;
+  
+        // Wait until userIsAdmin is defined
+        const userIsAdmin = users.users.find(user => user?.email === userEmail)?.isAdmin;
+        if (userIsAdmin === undefined) {
+          return;
+        }
+  
+        console.log(userIsAdmin);
+  
+        if (!userIsAdmin) {
           // Redirect to the homepage with an error message
           router.replace('/');
-          setRequestError('You don\'t have access to the admin page.');
+          setRequestError("You don't have access to the admin page.");
           setRequestStatus('error');
         } else {
           // Set the status to success if the user is an admin
           setRequestStatus('success');
         }
+  
+        setLoading(false);
       } catch (error) {
         console.error(error);
         // Handle other errors here, e.g., network issues
         setRequestError('An error occurred while fetching data.');
         setRequestStatus('error');
+        setLoading(false);
       }
     };
-
+  
     fetchData();
   }, [session, router]);
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,6 +92,12 @@ const Login = () => {
 
     fetchData();
   }, [session]);
+
+  if (loading) {
+    return (
+      <div>Loading...</div>
+    )
+  }
 
   return (
     <div className='absolute top-0 right-0 left-0 w-screen h-screen max-h-screen flex flex-col items-start justify-start overflow-hidden overflow-y-hidden'>

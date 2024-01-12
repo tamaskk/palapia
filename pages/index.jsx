@@ -5,6 +5,7 @@ import { getAllRecipe } from "@/lib/db";
 import { useMainContext } from "@/lib/maincontext";
 import Head from 'next/head'
 import CookieConsent from "react-cookie-consent";
+import { useSession } from "next-auth/react";
 
 export default function Home({ recipes }) {
 
@@ -12,6 +13,8 @@ export default function Home({ recipes }) {
   const [recipeList, setRecipeList] = useState(recipes);
 
   const { filteredType, filteredTime, filteredCountry, filteredDifficulity } = useMainContext();
+
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     if (filteredDatas.includes('')) {
